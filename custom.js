@@ -21,6 +21,8 @@ class ImagePreview extends HTMLElement {
         div.style.width = 'inherit';
         div.style.minHeight = '100%';
         div.style.position = 'relative';
+        div.style.border = 'dashed blue 1px';
+        div.style.borderRadius = '2%';
         return div;
     }
 
@@ -37,9 +39,18 @@ class ImagePreview extends HTMLElement {
         label.style.right = '0';
         label.style.bottom = '0';
         label.style.backgroundColor = '#c7c2c238';
+        label.style.alignContent = 'center';
         label.setAttribute('for', id);
 
-        const lableText = document.createTextNode('Choose File');
+        const caption = document.createElement('span');
+
+        caption.style.display = 'flex';
+        caption.style.justifyContent = 'center';
+        caption.style.alignItems = 'center';
+        caption.style.width = '100%';
+        caption.style.height = '100%';
+        const spanText = document.createTextNode('Choose Photo');
+        caption.appendChild(spanText);
 
         const file = document.createElement('input');
         file.type = 'file';
@@ -53,8 +64,24 @@ class ImagePreview extends HTMLElement {
             imgPreview.style.width = '100%';
         });
 
+        const btn = document.createElement('button');
+        btn.style.float = 'right';
+        btn.style.background = 'none';
+        btn.style.border = 'none';
+        btn.style.outline = 'none';
+        btn.style.cursor = 'pointer';
+        btn.style.padding = '.5rem';
+        btn.style.color = 'red';
+        const btnLabel = document.createTextNode('Remove');
+        btn.appendChild(btnLabel);
+        btn.addEventListener('click', function (e) {
+            imgPreview.removeAttribute('src');
+            imgPreview.style.width = '0';
+            file.value = '';
+        });
         label.appendChild(file);
-        label.appendChild(lableText);
+        label.appendChild(btn);
+        label.appendChild(caption);
         return label;
     }
 
